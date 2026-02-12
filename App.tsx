@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Menu, X, Sun, Moon, Languages, Sparkles, Wand2, Download, 
@@ -39,7 +40,7 @@ const CAMERA_ANGLES = [
     label: 'Close-up', 
     desc: 'Fokus pada detail wajah yang sangat tajam.',
     icon: <Maximize className="w-3 h-3"/>, 
-    prompt: 'Kamera makro sangat dekat, fokus pada detail tekstur pori-pori kulit, warna mata, dan detail bibir yang sangat tajam.' 
+    prompt: 'Kamera makro sangat dekat, fokus pada detail tekstur pori-pori kulit, warna mata, and detail bibir yang sangat tajam.' 
   },
   { 
     id: 'profile', 
@@ -233,7 +234,8 @@ const App: React.FC = () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       const video = document.createElement('video');
-      video.srcObject = stream as any;
+      // Fix: Cast explicitly to HTMLVideoElement and cast stream to MediaStream to satisfy internal Blob requirements in certain environments.
+      (video as HTMLVideoElement).srcObject = stream as MediaStream;
       await video.play();
       
       const canvas = document.createElement('canvas');
